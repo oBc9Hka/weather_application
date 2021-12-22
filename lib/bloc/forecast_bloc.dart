@@ -11,16 +11,13 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
   ForecastBloc(this.forecastRepository) : super(ForecastEmptyState()) {
     on<ForecastRequested>((event, emit) async {
       emit(ForecastLoadingState());
-      // try {
-        // final List<Forecast> _loadedForecastList =
-        //     await forecastRepository.getForecast();
+      try {
         final Forecast _loadedForecastList = await forecastRepository.getForecast();
 
         emit(ForecastLoadedState(loadedForecast: _loadedForecastList));
-      // } catch (_) {
-      //   emit(ForecastErrorState());
-      // }
+      } catch (e) {
+        emit(ForecastErrorState());
+      }
     });
   }
 }
-//53.881319, 27.429195

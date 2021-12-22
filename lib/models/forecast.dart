@@ -122,7 +122,7 @@ class Rain {
   });
 
   factory Rain.fromJson(Map<String, dynamic> json) => Rain(
-        the3H: json["3h"],
+        the3H: double.parse(json["3h"].toString()),
       );
 }
 
@@ -141,19 +141,11 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
         id: json["id"],
-        main: json["main"], //?? mainEnumValues.map[json["main"]],
+        main: json["main"],
         description: json["description"],
         icon: json["icon"],
       );
 }
-
-enum MainEnum { clear, clouds, rain }
-
-final mainEnumValues = EnumValues({
-  "Clear": MainEnum.clear,
-  "Clouds": MainEnum.clouds,
-  "Rain": MainEnum.rain
-});
 
 class Wind {
   final double speed;
@@ -165,7 +157,7 @@ class Wind {
   });
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-        speed: json["speed"],
+        speed: double.parse(json["speed"].toString()),
         deg: json["deg"],
       );
 }
@@ -186,62 +178,3 @@ extension StringCasingExtension on String {
   String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1)}':'';
   String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 }
-// enum WeatherState {
-//   snow,
-//   rain,
-// }
-//
-// enum WindDirectionCompass {
-//   north,
-//   northEast,
-//   east,
-//   southEast,
-//   south,
-//   southWest,
-//   west,
-//   northWest,
-//   unknown
-// }
-//
-// class Forecast {
-//   const Forecast({
-//     required this.dateTime,
-//     required this.weatherStateName,
-//     required this.weatherNameDescription,
-//     required this.temp,
-//     required this.pop,
-//     required this.volume,
-//     required this.pressure,
-//     required this.windSpeed,
-//     required this.windDirectionCompass,
-//   });
-//
-//   final String dateTime;
-//   final String weatherStateName;
-//   final String weatherNameDescription;
-//   final int temp;
-//   final int pop;
-//   final double volume;
-//   final int pressure;
-//   final int windSpeed;
-//   final WindDirectionCompass windDirectionCompass;
-//
-//   factory Forecast.fromJson(Map<String, dynamic> json) {
-//     return Forecast(
-//       dateTime: json['dt_txt'],
-//       weatherStateName: json['weather'][0]['main'],
-//       weatherNameDescription: json['weather'][0]['description'],
-//       temp: json['main']['temp'].round(),
-//       pop: json['pop'].round(),
-//       volume: (json['weather'][0]['main'] != 'Snow' &&
-//               json['weather'][0]['main'] != 'Rain')
-//           ? 0.0
-//           : json['weather'][0]['main'] == 'Snow'
-//               ? json['snow']['3h']
-//               : json['rain']['3h'],
-//       pressure: json['main']['pressure'].round(),
-//       windSpeed: json['wind']['speed'].round(),
-//       windDirectionCompass: WindDirectionCompass.east,
-//     );
-//   }
-// }

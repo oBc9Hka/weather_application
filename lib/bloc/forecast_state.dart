@@ -7,7 +7,6 @@ class ForecastEmptyState extends ForecastState {}
 class ForecastLoadingState extends ForecastState {}
 
 class ForecastLoadedState extends ForecastState {
-  // List<Forecast> loadedForecast;
   Forecast loadedForecast;
 
   ForecastLoadedState({required this.loadedForecast})

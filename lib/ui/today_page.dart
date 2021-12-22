@@ -1,42 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:weather_application/ui/widgets/icon_by_description.dart';
 import 'package:weather_application/ui/widgets/indicator.dart';
 import 'package:weather_icons/weather_icons.dart';
 
-class TodayPage extends StatefulWidget {
-  const TodayPage({Key? key}) : super(key: key);
+import '../models/forecast.dart';
 
-  @override
-  _TodayPageState createState() => _TodayPageState();
-}
+class TodayPage extends StatelessWidget {
+  const TodayPage({Key? key, required this.city, required this.currentWeather})
+      : super(key: key);
+  final City city;
+  final ListElement currentWeather;
 
-class _TodayPageState extends State<TodayPage> {
   @override
   Widget build(BuildContext context) {
+    String _getWayByDegrees(int degree) {
+      var value = (degree / 45).round();
+      var arr = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+      return arr[(value % 8)];
+    }
+
+    IconData _getIconByDegrees(int degree) {
+      var value = (degree / 45).round();
+      var arr = [
+        WeatherIcons.wind_deg_180,
+        WeatherIcons.wind_deg_225,
+        WeatherIcons.wind_deg_270,
+        WeatherIcons.wind_deg_315,
+        WeatherIcons.wind_deg_0,
+        WeatherIcons.wind_deg_45,
+        WeatherIcons.wind_deg_90,
+        WeatherIcons.wind_deg_135,
+      ];
+      return arr[(value % 8)];
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Column(
           children: [
-            const Icon(
-              Icons.wb_sunny_outlined,
-              size: 70,
-              color: Colors.orangeAccent,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: IconByDescription(
+                weatherID: currentWeather.weather.first.id,
+                date: currentWeather.dtTxt,
+                color: Colors.orangeAccent,
+                size: 70,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon((Icons.location_on_outlined)),
+              children: [
+                const Icon((Icons.location_on_outlined)),
                 Text(
-                  'London, UK',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  '${city.name}, ${city.country}',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w300),
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 10.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
               child: Text(
-                '22°C | Sunny',
-                style: TextStyle(
+                '${currentWeather.main.temp}°C | ${currentWeather.weather.first.main}',
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w300,
                     color: Colors.blue),
@@ -49,30 +76,40 @@ class _TodayPageState extends State<TodayPage> {
           indent: MediaQuery.of(context).size.width * 0.3,
           endIndent: MediaQuery.of(context).size.width * 0.3,
         ),
-        Wrap(
-          alignment: WrapAlignment.center,
-          spacing: MediaQuery.of(context).size.width * 0.2,
-          runSpacing: 20,
-          children: const [
-            IconIndicator(
-              icon: WeatherIcons.rain,
-              title: '57%',
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconIndicator(
+                  icon: WeatherIcons.rain,
+                  title: '${currentWeather.main.humidity}%',
+                ),
+                IconIndicator(
+                  icon: WeatherIcons.raindrop,
+                  title: currentWeather.weather.first.main == 'Snow'
+                      ? '${currentWeather.snow?.the3H ?? 0.0}'
+                      : '${currentWeather.rain?.the3H ?? 0.0}',
+                ),
+                IconIndicator(
+                  icon: WeatherIcons.celsius,
+                  title: '${currentWeather.main.pressure} hPa',
+                ),
+              ],
             ),
-            IconIndicator(
-              icon: WeatherIcons.raindrop,
-              title: '1.0 mm',
-            ),
-            IconIndicator(
-              icon: WeatherIcons.celsius,
-              title: '1019 hPa',
-            ),
-            IconIndicator(
-              icon: WeatherIcons.strong_wind,
-              title: '20 km/h',
-            ),
-            IconIndicator(
-              icon: WeatherIcons.wind_direction,
-              title: 'SE',
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconIndicator(
+                  icon: WeatherIcons.strong_wind,
+                  title: '${(currentWeather.wind.speed / 3.6).round()} km/h',
+                ),
+                IconIndicator(
+                  icon: _getIconByDegrees(currentWeather.wind.deg),
+                  title: _getWayByDegrees(currentWeather.wind.deg),
+                ),
+              ],
             ),
           ],
         ),
@@ -83,7 +120,9 @@ class _TodayPageState extends State<TodayPage> {
         ),
         TextButton(
           onPressed: () {},
-          style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.orangeAccent[100]),),
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.orangeAccent[100]),
+          ),
           child: const Text(
             'Share',
             style: TextStyle(fontSize: 18, color: Colors.orange),

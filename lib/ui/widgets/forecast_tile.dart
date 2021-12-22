@@ -4,13 +4,11 @@ class ForecastTile extends StatelessWidget {
   const ForecastTile({
     Key? key,
     required this.icon,
-    required this.iconPath,
     required this.time,
     required this.weatherState,
     required this.temperature,
   }) : super(key: key);
-  final IconData icon;
-  final String iconPath;
+  final Widget icon;
   final String time;
   final String weatherState;
   final String temperature;
@@ -23,13 +21,9 @@ class ForecastTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Expanded(
-          //   flex: 1,
-          //   child: Icon(icon, color: Colors.orangeAccent, size: 50,),
-          // ),
           Expanded(
             flex: 1,
-            child: Image.network('https://openweathermap.org/img/wn/' + iconPath + '@2x.png'),
+            child: icon,
           ),
           Expanded(
             flex: 2,
