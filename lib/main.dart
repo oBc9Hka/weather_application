@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_application/bloc/forecast_bloc.dart';
+import 'package:weather_application/services/forecast_repository.dart';
 import 'package:weather_application/ui/home_page.dart';
 
 void main() {
@@ -10,12 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    final forecastRepository = ForecastRepository();
+    return BlocProvider<ForecastBloc>(
+      create: (context) => ForecastBloc(forecastRepository),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }
