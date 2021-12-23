@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_application/ui/widgets/icon_by_id.dart';
 import 'package:weather_application/ui/widgets/custom_text_button.dart';
-import 'package:weather_application/ui/widgets/icon_by_description.dart';
 import 'package:weather_application/ui/widgets/indicator.dart';
 import 'package:weather_icons/weather_icons.dart';
 
@@ -34,91 +34,97 @@ class TodayPage extends StatelessWidget {
       ];
       return arr[(value % 8)];
     }
-
+    //TODO: width > height
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: IconByDescription(
-                weatherID: currentWeather.weather.first.id,
-                date: currentWeather.dtTxt,
-                color: Colors.orangeAccent,
-                size: 70,
+        Expanded(
+          flex: 5,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: IconById(
+                  weatherID: currentWeather.weather.first.id,
+                  date: currentWeather.dtTxt,
+                  color: Colors.orangeAccent,
+                  size: 70,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon((Icons.location_on_outlined)),
-                Text(
-                  '${city.name}, ${city.country}',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon((Icons.location_on_outlined)),
+                  Text(
+                    '${city.name}, ${city.country}',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  '${currentWeather.main.temp}°C | ${currentWeather.weather.first.main}',
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w300),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.blue),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                '${currentWeather.main.temp}°C | ${currentWeather.weather.first.main}',
-                style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.blue),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Divider(
           thickness: 2,
           indent: MediaQuery.of(context).size.width * 0.3,
           endIndent: MediaQuery.of(context).size.width * 0.3,
         ),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconIndicator(
-                  icon: WeatherIcons.rain,
-                  title: '${currentWeather.main.humidity}%',
-                ),
-                IconIndicator(
-                  icon: WeatherIcons.raindrop,
-                  title: currentWeather.weather.first.main == 'Snow'
-                      ? '${currentWeather.snow?.the3H ?? 0.0}'
-                      : '${currentWeather.rain?.the3H ?? 0.0}',
-                ),
-                IconIndicator(
-                  icon: WeatherIcons.celsius,
-                  title: '${currentWeather.main.pressure} hPa',
-                ),
-              ],
-            ),
-            const Padding(padding: EdgeInsets.only(top: 20)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconIndicator(
-                  icon: WeatherIcons.strong_wind,
-                  title: '${(currentWeather.wind.speed / 3.6).round()} km/h',
-                ),
-                IconIndicator(
-                  icon: _getIconByDegrees(currentWeather.wind.deg),
-                  title: _getWayByDegrees(currentWeather.wind.deg),
-                ),
-              ],
-            ),
-          ],
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconIndicator(
+                    icon: WeatherIcons.rain,
+                    title: '${currentWeather.main.humidity}%',
+                  ),
+                  IconIndicator(
+                    icon: WeatherIcons.raindrop,
+                    title: currentWeather.weather.first.main == 'Snow'
+                        ? '${currentWeather.snow?.the3H ?? 0.0}'
+                        : '${currentWeather.rain?.the3H ?? 0.0}',
+                  ),
+                  IconIndicator(
+                    icon: WeatherIcons.celsius,
+                    title: '${currentWeather.main.pressure} hPa',
+                  ),
+                ],
+              ),
+              // const Padding(padding: EdgeInsets.only(top: 20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconIndicator(
+                    icon: WeatherIcons.strong_wind,
+                    title: '${(currentWeather.wind.speed / 3.6).round()} km/h',
+                  ),
+                  IconIndicator(
+                    icon: _getIconByDegrees(currentWeather.wind.deg),
+                    title: _getWayByDegrees(currentWeather.wind.deg),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         Divider(
           thickness: 2,
           indent: MediaQuery.of(context).size.width * 0.3,
           endIndent: MediaQuery.of(context).size.width * 0.3,
-        ),
+        )
         const CustomTextButton(title: 'Share'),
       ],
     );

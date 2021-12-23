@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
-class IconByDescription extends StatelessWidget {
-  const IconByDescription({
+class IconById extends StatelessWidget {
+  const IconById({
     Key? key,
     required this.weatherID,
     required this.date,
@@ -77,10 +77,10 @@ class IconByDescription extends StatelessWidget {
           }
         default:
           {
-            return WeatherIcons.fire;
+            return WeatherIcons.day_sunny;
           }
       }
-      return WeatherIcons.fire;
+      return WeatherIcons.day_sunny;
     }
 
     return Icon(

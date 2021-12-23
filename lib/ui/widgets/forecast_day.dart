@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/models/forecast.dart';
-import 'package:weather_application/ui/widgets/icon_by_description.dart';
+import 'package:weather_application/ui/widgets/icon_by_id.dart';
 
 import 'forecast_tile.dart';
 
@@ -35,6 +35,7 @@ class ForecastDay extends StatelessWidget {
           return 'Monday';
       }
     }
+    const double dividerThickness = 1.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,12 +43,12 @@ class ForecastDay extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
           child: Text(
-            _getDayByNumber(weekday),
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+            _getDayByNumber(weekday).toUpperCase(),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
         ),
         const Divider(
-          thickness: 2,
+          thickness: dividerThickness,
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -55,7 +56,7 @@ class ForecastDay extends StatelessWidget {
           itemCount: list.length,
           itemBuilder: (context, index) {
             return ForecastTile(
-              icon: IconByDescription(
+              icon: IconById(
                 weatherID: list[index].weather.first.id,
                 date: list[index].dtTxt,
                 color: Colors.orangeAccent,
@@ -70,13 +71,13 @@ class ForecastDay extends StatelessWidget {
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
-              thickness: 2,
+              thickness: dividerThickness,
               indent: MediaQuery.of(context).size.width * 0.25,
             );
           },
         ),
         const Divider(
-          thickness: 2,
+          thickness: dividerThickness,
         ),
       ],
     );
@@ -95,8 +96,8 @@ class ForecastDayToday extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
           child: Text(
-            'Today',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+            'TODAY',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
         ),
         ListView.separated(
@@ -107,10 +108,10 @@ class ForecastDayToday extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                   border: list.first == list[index]
-                      ? Border.all(color: Colors.blue, width: 2)
+                      ? Border.all(color: Colors.blue, width: 3)
                       : null),
               child: ForecastTile(
-                icon: IconByDescription(
+                icon: IconById(
                   weatherID: list[index].weather.first.id,
                   date: list[index].dtTxt,
                   color: Colors.orangeAccent,
