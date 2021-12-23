@@ -40,8 +40,9 @@ class ForecastDay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
           child: Text(
             _getDayByNumber(weekday).toUpperCase(),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
@@ -60,7 +61,7 @@ class ForecastDay extends StatelessWidget {
                 weatherID: list[index].weather.first.id,
                 date: list[index].dtTxt,
                 color: Colors.orangeAccent,
-                size: 50,
+                size: 45,
               ),
               time: list[index].dtTxt.hour.toString().length < 2
                   ? '0${list[index].dtTxt.hour}:00'

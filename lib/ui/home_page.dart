@@ -9,6 +9,7 @@ import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
 import 'package:weather_application/ui/widgets/forecast_error.dart';
 import 'package:weather_application/ui/widgets/geolocation_loading.dart';
 import 'package:weather_application/ui/widgets/geolocation_loading_error.dart';
+import 'package:weather_application/ui/widgets/today_page_wide.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 import '../bloc/forecast_bloc.dart';
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex == 0 ? 'Today' : _cityName,
               style: const TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w400,
               ),
             );
           },
@@ -104,10 +105,15 @@ class _HomePageState extends State<HomePage> {
           } else if (state is ForecastLoadedState) {
             _cityName = state.loadedForecast.city.name;
             return _selectedIndex == 0
-                ? TodayPage(
-                    currentWeather: state.loadedForecast.list[0],
-                    city: state.loadedForecast.city,
-                  )
+                ? (MediaQuery.of(context).size.width >
+                        MediaQuery.of(context).size.height)
+                    ? TodayPageWide(
+                        city: state.loadedForecast.city,
+                        currentWeather: state.loadedForecast.list[0])
+                    : TodayPage(
+                        currentWeather: state.loadedForecast.list[0],
+                        city: state.loadedForecast.city,
+                      )
                 : ForecastPage(
                     forecast: state.loadedForecast,
                     forecastList: _forecastSplit(state.loadedForecast.list),

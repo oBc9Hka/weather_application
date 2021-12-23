@@ -16,10 +16,17 @@ class IconIndicator extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.orangeAccent, size: 30,),
+          Icon(
+            icon,
+            color: Colors.orangeAccent,
+            size: 30,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: Text(title, style: const TextStyle(fontSize: 16),),
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),
