@@ -3,17 +3,19 @@ import 'package:weather_application/ui/widgets/custom_text_button.dart';
 import 'package:weather_application/ui/widgets/today_page_widgets/city_section.dart';
 import 'package:weather_application/ui/widgets/today_page_widgets/icons_section.dart';
 
-import '../../models/forecast.dart';
+import '../models/forecast.dart';
 
 class TodayPageWide extends StatelessWidget {
   const TodayPageWide({
     Key? key,
     required this.city,
     required this.currentWeather,
+    required this.onSharePressed,
   }) : super(key: key);
 
   final City city;
   final ListElement currentWeather;
+  final Function onSharePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class TodayPageWide extends StatelessWidget {
         Column(
           children: [
             IconsSection(currentWeather: currentWeather),
-            const CustomTextButton(title: 'Share'),
+            CustomTextButton(title: 'Share', onPressed: onSharePressed,),
           ],
         ),
       ],
