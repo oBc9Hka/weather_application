@@ -17,6 +17,9 @@ class ForecastPage extends StatelessWidget {
     return ListView.builder(
       itemCount: forecastList.length,
       itemBuilder: (context, index) {
+        if(index == 0){
+          return ForecastDayToday(list: forecastList[index]);
+        }
         return ForecastDay(
           weekday: forecastList[index].first.dtTxt.weekday,
           list: forecastList[index],
