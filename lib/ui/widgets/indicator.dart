@@ -10,7 +10,7 @@ class IconIndicator extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(
         minWidth: 80,
-        maxHeight: 50,
+        maxHeight: 60,
         maxWidth: 80,
       ),
       child: Column(
