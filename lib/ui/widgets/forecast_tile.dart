@@ -30,16 +30,19 @@ class ForecastTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(time),
+                Text(time, style: const TextStyle(fontSize: 16),),
                 Text(weatherState),
               ],
             ),
           ),
           Expanded(
             flex: 1,
-            child: Text(
-              '$temperature°',
-              style: const TextStyle(color: Colors.blue, fontSize: 50),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Text(
+                '$temperature°',
+                style: const TextStyle(color: Colors.blue, fontSize: 50, ),textAlign: TextAlign.right,
+              ),
             ),
           )
         ],
