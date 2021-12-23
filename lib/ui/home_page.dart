@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share/share.dart';
 import 'package:weather_application/bloc/forecast_event.dart';
 import 'package:weather_application/bloc/forecast_state.dart';
 import 'package:weather_application/models/forecast.dart';
@@ -9,7 +10,7 @@ import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
 import 'package:weather_application/ui/widgets/forecast_error.dart';
 import 'package:weather_application/ui/widgets/geolocation_loading.dart';
 import 'package:weather_application/ui/widgets/geolocation_loading_error.dart';
-import 'package:weather_application/ui/widgets/today_page_wide.dart';
+import 'package:weather_application/ui/today_page_wide.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 import '../bloc/forecast_bloc.dart';
@@ -69,6 +70,16 @@ class _HomePageState extends State<HomePage> {
     return _forecastsForWeek;
   }
 
+  void _onSharePressed(City city, ListElement weather) {
+    Share.share('''Forecast for ${city.name}:
+Temperature: ${weather.main.temp}°C
+Weather: ${weather.weather.first.description}
+Humidity: ${weather.main.humidity}%
+Pressure: ${weather.main.pressure} hPa
+Wind speed: ${(weather.wind.speed/3.6).round()} km/h
+Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
+  }
+
   @override
   Widget build(BuildContext context) {
     final ForecastBloc forecastBloc = context.read<ForecastBloc>();
@@ -109,10 +120,23 @@ class _HomePageState extends State<HomePage> {
                         MediaQuery.of(context).size.height)
                     ? TodayPageWide(
                         city: state.loadedForecast.city,
-                        currentWeather: state.loadedForecast.list[0])
+                        currentWeather: state.loadedForecast.list[0],
+                        onSharePressed: () {
+                          _onSharePressed(
+                            state.loadedForecast.city,
+                            state.loadedForecast.list[0],
+                          );
+                        },
+                      )
                     : TodayPage(
                         currentWeather: state.loadedForecast.list[0],
                         city: state.loadedForecast.city,
+                        onSharePressed: () {
+                          _onSharePressed(
+                            state.loadedForecast.city,
+                            state.loadedForecast.list[0],
+                          );
+                        },
                       )
                 : ForecastPage(
                     forecast: state.loadedForecast,
