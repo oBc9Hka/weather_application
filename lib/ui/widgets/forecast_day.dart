@@ -35,12 +35,10 @@ class ForecastDay extends StatelessWidget {
           return 'Monday';
       }
     }
-    const double dividerThickness = 1.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
           child: Text(
@@ -48,9 +46,7 @@ class ForecastDay extends StatelessWidget {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
         ),
-        const Divider(
-          thickness: dividerThickness,
-        ),
+        const Divider(),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -71,15 +67,10 @@ class ForecastDay extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              thickness: dividerThickness,
-              indent: MediaQuery.of(context).size.width * 0.25,
-            );
+            return const CustomDivider();
           },
         ),
-        const Divider(
-          thickness: dividerThickness,
-        ),
+        const Divider(),
       ],
     );
   }
@@ -129,10 +120,7 @@ class ForecastDayToday extends StatelessWidget {
           },
           separatorBuilder: (BuildContext context, int index) {
             if (index != 0) {
-              return Divider(
-                thickness: 2,
-                indent: MediaQuery.of(context).size.width * 0.25,
-              );
+              return const CustomDivider();
             }
             return const SizedBox.shrink();
           },
@@ -141,6 +129,23 @@ class ForecastDayToday extends StatelessWidget {
           const Divider(
             thickness: 2,
           ),
+      ],
+    );
+  }
+}
+
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        Expanded(flex: 4, child: SizedBox.shrink()),
+        Expanded(
+          flex: 9,
+          child: Divider(),
+        ),
       ],
     );
   }
