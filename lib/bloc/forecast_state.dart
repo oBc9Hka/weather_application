@@ -4,6 +4,8 @@ abstract class ForecastState {}
 
 class ForecastEmptyState extends ForecastState {}
 
+class ForecastGettingGeolocationState extends ForecastState{}
+
 class ForecastLoadingState extends ForecastState {}
 
 class ForecastLoadedState extends ForecastState {
@@ -14,3 +16,5 @@ class ForecastLoadedState extends ForecastState {
 }
 
 class ForecastErrorState extends ForecastState {}
+
+class ForecastGeolocationErrorState extends ForecastState{}

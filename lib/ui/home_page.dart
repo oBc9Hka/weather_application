@@ -5,7 +5,10 @@ import 'package:weather_application/bloc/forecast_state.dart';
 import 'package:weather_application/models/forecast.dart';
 import 'package:weather_application/ui/forecast_page.dart';
 import 'package:weather_application/ui/today_page.dart';
+import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
 import 'package:weather_application/ui/widgets/forecast_error.dart';
+import 'package:weather_application/ui/widgets/geolocation_loading.dart';
+import 'package:weather_application/ui/widgets/geolocation_loading_error.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 import '../bloc/forecast_bloc.dart';
@@ -88,31 +91,40 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<ForecastBloc, ForecastState>(
         builder: (BuildContext context, state) {
           if (state is ForecastEmptyState) {
-            forecastBloc.add(ForecastRequested());
+            forecastBloc.add(ForecastRequestedEvent());
             return const Center(child: Text('Loading...'));
+          } else if (state is ForecastGettingGeolocationState) {
+            return const Center(
+              child: GeolocationLoading(),
+            );
           } else if (state is ForecastLoadingState) {
             return const Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.orangeAccent,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              ),
+              child: CustomCircularProgressIndicator(),
             );
           } else if (state is ForecastLoadedState) {
             _cityName = state.loadedForecast.city.name;
             return _selectedIndex == 0
                 ? TodayPage(
-              currentWeather: state.loadedForecast.list[0],
-              city: state.loadedForecast.city,
-            )
+                    currentWeather: state.loadedForecast.list[0],
+                    city: state.loadedForecast.city,
+                  )
                 : ForecastPage(
-              forecast: state.loadedForecast,
-              forecastList: _forecastSplit(state.loadedForecast.list),
-            );
+                    forecast: state.loadedForecast,
+                    forecastList: _forecastSplit(state.loadedForecast.list),
+                  );
           } else if (state is ForecastErrorState) {
             return Center(
               child: ForecastError(
                 onRetryPressed: () {
-                  forecastBloc.add(ForecastRequested());
+                  forecastBloc.add(ForecastRequestedEvent());
+                },
+              ),
+            );
+          } else if (state is ForecastGeolocationErrorState) {
+            return Center(
+              child: GeolocationError(
+                onRetryPressed: () {
+                  forecastBloc.add(ForecastRequestedEvent());
                 },
               ),
             );
@@ -120,11 +132,6 @@ class _HomePageState extends State<HomePage> {
           return const SizedBox.shrink();
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     forecastBloc.add(ForecastRequested());
-      //   },
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
