@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  static const double bottomNavigationIconSize = 20;
   String _cityName = 'Searching...';
 
   void _onItemTapped(int index) {
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(bottom: 10.0),
               child: Icon(
                 WeatherIcons.day_sunny,
-                size: 30,
+                size: bottomNavigationIconSize,
               ),
             ),
             label: 'Today',
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(bottom: 10.0),
               child: Icon(
                 WeatherIcons.night_alt_cloudy,
-                size: 30,
+                size: bottomNavigationIconSize,
               ),
             ),
             label: 'Forecast',

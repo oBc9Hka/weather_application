@@ -16,9 +16,6 @@ class ForecastDay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _getDayByNumber(int dayNumber) {
-      if (DateTime.now().weekday == dayNumber) {
-        return 'Today';
-      }
       switch (dayNumber) {
         case 1:
           return 'Monday';
@@ -49,10 +46,59 @@ class ForecastDay extends StatelessWidget {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
           ),
         ),
-        if (_getDayByNumber(weekday) != 'Today')
-          const Divider(
-            thickness: 2,
+        const Divider(
+          thickness: 2,
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return ForecastTile(
+              icon: IconByDescription(
+                weatherID: list[index].weather.first.id,
+                date: list[index].dtTxt,
+                color: Colors.orangeAccent,
+                size: 50,
+              ),
+              time: list[index].dtTxt.hour.toString().length < 2
+                  ? '0${list[index].dtTxt.hour}:00'
+                  : '${list[index].dtTxt.hour}:00',
+              weatherState: list[index].weather[0].description.toCapitalized(),
+              temperature: list[index].main.temp.toString(),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              thickness: 2,
+              indent: MediaQuery.of(context).size.width * 0.25,
+            );
+          },
+        ),
+        const Divider(
+          thickness: 2,
+        ),
+      ],
+    );
+  }
+}
+
+class ForecastDayToday extends StatelessWidget {
+  const ForecastDayToday({Key? key, required this.list}) : super(key: key);
+  final List<ListElement> list;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+          child: Text(
+            'Today',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
           ),
+        ),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -60,8 +106,7 @@ class ForecastDay extends StatelessWidget {
           itemBuilder: (context, index) {
             return Container(
               decoration: BoxDecoration(
-                  border: _getDayByNumber(weekday) == 'Today' &&
-                          list[index] == list.first
+                  border: list.first == list[index]
                       ? Border.all(color: Colors.blue, width: 2)
                       : null),
               child: ForecastTile(
@@ -81,15 +126,16 @@ class ForecastDay extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return _getDayByNumber(weekday) != 'Today'
-                ? Divider(
-                    thickness: 2,
-                    indent: MediaQuery.of(context).size.width * 0.25,
-                  )
-                : const SizedBox.shrink();
+            if (index != 0) {
+              return Divider(
+                thickness: 2,
+                indent: MediaQuery.of(context).size.width * 0.25,
+              );
+            }
+            return const SizedBox.shrink();
           },
         ),
-        if (_getDayByNumber(weekday) != 'Today' && list.length != 1)
+        if (list.length != 1)
           const Divider(
             thickness: 2,
           ),

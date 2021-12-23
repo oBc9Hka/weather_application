@@ -9,8 +9,9 @@ class IconIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
+        minWidth: 80,
         maxHeight: 50,
-        maxWidth: 60,
+        maxWidth: 80,
       ),
       child: Column(
         children: [
