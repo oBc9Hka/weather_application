@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_application/ui/widgets/custom_text_button.dart';
 import 'package:weather_application/ui/widgets/icon_by_description.dart';
 import 'package:weather_application/ui/widgets/indicator.dart';
 import 'package:weather_icons/weather_icons.dart';
@@ -118,16 +119,7 @@ class TodayPage extends StatelessWidget {
           indent: MediaQuery.of(context).size.width * 0.3,
           endIndent: MediaQuery.of(context).size.width * 0.3,
         ),
-        TextButton(
-          onPressed: () {},
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Colors.orangeAccent[100]),
-          ),
-          child: const Text(
-            'Share',
-            style: TextStyle(fontSize: 18, color: Colors.orange),
-          ),
-        ),
+        const CustomTextButton(title: 'Share'),
       ],
     );
   }
