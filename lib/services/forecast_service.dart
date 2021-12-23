@@ -5,14 +5,12 @@ import 'package:weather_application/models/forecast.dart';
 
 // minsk id:  625144
 // minsk geo: 53.900889, 27.562774
-//https://api.openweathermap.org/data/2.5/forecast?lat=53.900889&lon=27.562774&appid=e58c5bb7a1593bcc9d47ac52d492b361&units=metric
+// https://api.openweathermap.org/data/2.5/forecast?lat=53.900889&lon=27.562774&appid=e58c5bb7a1593bcc9d47ac52d492b361&units=metric
 class ForecastService {
   static const String _apiKey = "e58c5bb7a1593bcc9d47ac52d492b361";
 
   //TODO: fetch by geo
-  Future<Forecast> fetchForecast({String lat = "", String lon = ""}) async {
-    var lat = 53.900889;
-    var lon = 27.562774;
+  Future<Forecast> fetchForecast({required double lat, required double lon}) async {
     var url =
         'https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&appid=$_apiKey&units=metric';
     final response = await http.get(Uri.parse(url));

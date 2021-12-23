@@ -1,3 +1,3 @@
 abstract class ForecastEvent{}
 
-class ForecastRequested extends ForecastEvent {}
+class ForecastRequestedEvent extends ForecastEvent {}
