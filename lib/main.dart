@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+          dividerTheme: const DividerThemeData(
+            space: 0,
+          ),
           primarySwatch: Colors.blue,
         ),
         home: const HomePage(),
