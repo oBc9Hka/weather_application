@@ -20,7 +20,6 @@ class ForecastBloc extends Bloc<ForecastEvent, ForecastState> {
         emit(ForecastLoadingState());
 
         try {
-          print(_position);
           final Forecast _loadedForecastList =
               await forecastRepository.getForecast(
             lat: _position.latitude,

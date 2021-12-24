@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
@@ -49,24 +50,53 @@ class _HomePageState extends State<HomePage> {
       forecast4,
       forecast5,
     ];
-    int index = list.first.dtTxt.day;
+    int index = list.first.dtTxt.weekday;
+
     for (int i = 0; i < 6; i++) {
-      try {
-        _forecastsForWeek[i] = list.sublist(
-          list.indexOf(
-              list.firstWhere((element) => element.dtTxt.day == index)),
-          list.indexOf(
-              list.firstWhere((element) => element.dtTxt.day == index + 1)),
-        );
-      } catch (_) {
-        _forecastsForWeek[i] = list.sublist(
-          list.indexOf(
-              list.firstWhere((element) => element.dtTxt.day == index)),
-          list.length,
-        );
+      if (index == 7) {
+        try {
+          _forecastsForWeek[i] = list.sublist(
+            list.indexOf(
+                list.firstWhere((element) => element.dtTxt.weekday == index)),
+            list.indexOf(
+                list.firstWhere((element) => element.dtTxt.weekday == 1)),
+          );
+        } catch (_) {
+          _forecastsForWeek[i] = list.sublist(
+            list.indexOf(
+                list.firstWhere((element) => element.dtTxt.weekday == index)),
+            list.length,
+          );
+        }
+        index = 0;
+      } else {
+        try {
+          _forecastsForWeek[i] = list.sublist(
+            list.indexOf(
+                list.firstWhere((element) => element.dtTxt.weekday == index)),
+            list.indexOf(list
+                .firstWhere((element) => element.dtTxt.weekday == index + 1)),
+          );
+        } catch (_) {
+          _forecastsForWeek[i] = list.sublist(
+            list.indexOf(
+                list.firstWhere((element) => element.dtTxt.weekday == index)),
+            list.length,
+          );
+          break;
+        }
       }
+
       index++;
     }
+
+    for (int i = 0; i < 6; i++) {
+      if (_forecastsForWeek.last.isEmpty) {
+        _forecastsForWeek.removeLast();
+        break;
+      }
+    }
+
     return _forecastsForWeek;
   }
 
@@ -76,7 +106,7 @@ Temperature: ${weather.main.temp}°C
 Weather: ${weather.weather.first.description}
 Humidity: ${weather.main.humidity}%
 Pressure: ${weather.main.pressure} hPa
-Wind speed: ${(weather.wind.speed/3.6).round()} km/h
+Wind speed: ${(weather.wind.speed / 3.6).round()} km/h
 Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
   }
 

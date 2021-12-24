@@ -55,7 +55,7 @@ class ForecastDay extends StatelessWidget {
             return ForecastTile(
               icon: IconById(
                 weatherID: list[index].weather.first.id,
-                date: list[index].dtTxt,
+                sys: list[index].sys,
                 color: Colors.orangeAccent,
                 size: 45,
               ),
@@ -105,7 +105,7 @@ class ForecastDayToday extends StatelessWidget {
               child: ForecastTile(
                 icon: IconById(
                   weatherID: list[index].weather.first.id,
-                  date: list[index].dtTxt,
+                  sys: list[index].sys,
                   color: Colors.orangeAccent,
                   size: 50,
                 ),
@@ -125,10 +125,7 @@ class ForecastDayToday extends StatelessWidget {
             return const SizedBox.shrink();
           },
         ),
-        if (list.length != 1)
-          const Divider(
-            thickness: 2,
-          ),
+        if (list.length != 1) const Divider(),
       ],
     );
   }

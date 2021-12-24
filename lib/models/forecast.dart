@@ -7,7 +7,8 @@ class Forecast {
     required this.city,
   });
 
-  factory Forecast.fromJson(Map<String, dynamic> json) => Forecast(
+  factory Forecast.fromJson(Map<String, dynamic> json) =>
+      Forecast(
         list: List<ListElement>.from(
             json["list"].map((x) => ListElement.fromJson(x))),
         city: City.fromJson(json["city"]),
@@ -27,7 +28,8 @@ class City {
     required this.country,
   });
 
-  factory City.fromJson(Map<String, dynamic> json) => City(
+  factory City.fromJson(Map<String, dynamic> json) =>
+      City(
         id: json["id"],
         name: json["name"],
         coord: Coord.fromJson(json["coord"]),
@@ -44,7 +46,8 @@ class Coord {
     required this.lon,
   });
 
-  factory Coord.fromJson(Map<String, dynamic> json) => Coord(
+  factory Coord.fromJson(Map<String, dynamic> json) =>
+      Coord(
         lat: json["lat"],
         lon: json["lon"],
       );
@@ -59,6 +62,7 @@ class ListElement {
   final DateTime dtTxt;
   final Rain? rain;
   final Rain? snow;
+  final Sys sys;
 
   ListElement({
     required this.dt,
@@ -69,18 +73,32 @@ class ListElement {
     required this.dtTxt,
     this.rain,
     this.snow,
+    required this.sys,
   });
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
-        dt: json["dt"],
-        main: MainClass.fromJson(json["main"]),
-        weather:
-            List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
-        clouds: Clouds.fromJson(json["clouds"]),
-        wind: Wind.fromJson(json["wind"]),
-        dtTxt: DateTime.parse(json["dt_txt"]),
-        rain: json['rain'] == null ? null : Rain.fromJson(json["rain"]),
-        snow: json["snow"] == null ? null : Rain.fromJson(json["snow"]),
+  factory ListElement.fromJson(Map<String, dynamic> json) =>
+      ListElement(
+          dt: json["dt"],
+          main: MainClass.fromJson(json["main"]),
+          weather:
+          List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
+          clouds: Clouds.fromJson(json["clouds"]),
+          wind: Wind.fromJson(json["wind"]),
+          dtTxt: DateTime.parse(json["dt_txt"]),
+          rain: json['rain'] == null ? null : Rain.fromJson(json["rain"]),
+          snow: json["snow"] == null ? null : Rain.fromJson(json["snow"]),
+          sys: Sys.fromJson(json['sys']),
+      );
+}
+
+class Sys {
+  final String pod;
+
+  Sys({required this.pod});
+
+  factory Sys.fromJson(Map<String, dynamic> json) =>
+      Sys(
+        pod: json['pod'],
       );
 }
 
@@ -91,7 +109,8 @@ class Clouds {
     required this.all,
   });
 
-  factory Clouds.fromJson(Map<String, dynamic> json) => Clouds(
+  factory Clouds.fromJson(Map<String, dynamic> json) =>
+      Clouds(
         all: json["all"],
       );
 }
@@ -107,7 +126,8 @@ class MainClass {
     required this.humidity,
   });
 
-  factory MainClass.fromJson(Map<String, dynamic> json) => MainClass(
+  factory MainClass.fromJson(Map<String, dynamic> json) =>
+      MainClass(
         temp: json["temp"].round(),
         pressure: json["pressure"],
         humidity: json["humidity"],
@@ -121,7 +141,8 @@ class Rain {
     required this.the3H,
   });
 
-  factory Rain.fromJson(Map<String, dynamic> json) => Rain(
+  factory Rain.fromJson(Map<String, dynamic> json) =>
+      Rain(
         the3H: double.parse(json["3h"].toString()),
       );
 }
@@ -139,7 +160,8 @@ class Weather {
     required this.icon,
   });
 
-  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
+  factory Weather.fromJson(Map<String, dynamic> json) =>
+      Weather(
         id: json["id"],
         main: json["main"],
         description: json["description"],
@@ -156,7 +178,8 @@ class Wind {
     required this.deg,
   });
 
-  factory Wind.fromJson(Map<String, dynamic> json) => Wind(
+  factory Wind.fromJson(Map<String, dynamic> json) =>
+      Wind(
         speed: double.parse(json["speed"].toString()),
         deg: json["deg"],
       );
@@ -175,6 +198,12 @@ class EnumValues<T> {
 }
 
 extension StringCasingExtension on String {
-  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1)}':'';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1)}' : '';
+
+  String toTitleCase() =>
+      replaceAll(RegExp(' +'), ' ')
+          .split(' ')
+          .map((str) => str.toCapitalized())
+          .join(' ');
 }

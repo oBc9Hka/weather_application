@@ -18,7 +18,7 @@ class CitySection extends StatelessWidget {
             padding: const EdgeInsets.all(40.0),
             child: IconById(
               weatherID: currentWeather.weather.first.id,
-              date: currentWeather.dtTxt,
+              sys: currentWeather.sys,
               color: Colors.orangeAccent,
               size: 70,
             ),
