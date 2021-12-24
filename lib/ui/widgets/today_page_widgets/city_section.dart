@@ -15,7 +15,7 @@ class CitySection extends StatelessWidget {
       Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.only(bottom: 30.0),
             child: IconById(
               weatherID: currentWeather.weather.first.id,
               sys: currentWeather.sys,
@@ -30,7 +30,7 @@ class CitySection extends StatelessWidget {
               Text(
                 '${city.name}, ${city.country}',
                 style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w300),
+                    fontSize: 20, fontWeight: FontWeight.w400),
               ),
             ],
           ),

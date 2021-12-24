@@ -7,6 +7,7 @@ import 'package:weather_application/bloc/forecast_state.dart';
 import 'package:weather_application/models/forecast.dart';
 import 'package:weather_application/ui/forecast_page.dart';
 import 'package:weather_application/ui/today_page.dart';
+import 'package:weather_application/ui/widgets/custom_app_bar_bottom.dart';
 import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
 import 'package:weather_application/ui/widgets/forecast_error.dart';
 import 'package:weather_application/ui/widgets/geolocation_loading.dart';
@@ -126,6 +127,7 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
             );
           },
         ),
+        bottom: const CustomAppBarBottom(),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 1,
@@ -145,10 +147,10 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
             );
           } else if (state is ForecastLoadedState) {
             _cityName = state.loadedForecast.city.name;
-            return _selectedIndex == 0
-                ? (MediaQuery.of(context).size.width >
-                        MediaQuery.of(context).size.height)
-                    ? TodayPageWide(
+            if (_selectedIndex == 0) {
+              if ((MediaQuery.of(context).size.width >
+                        MediaQuery.of(context).size.height)) {
+                return TodayPageWide(
                         city: state.loadedForecast.city,
                         currentWeather: state.loadedForecast.list[0],
                         onSharePressed: () {
@@ -157,21 +159,25 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
                             state.loadedForecast.list[0],
                           );
                         },
-                      )
-                    : TodayPage(
-                        currentWeather: state.loadedForecast.list[0],
-                        city: state.loadedForecast.city,
-                        onSharePressed: () {
-                          _onSharePressed(
-                            state.loadedForecast.city,
-                            state.loadedForecast.list[0],
-                          );
-                        },
-                      )
-                : ForecastPage(
+                      );
+              } else {
+                return TodayPage(
+                  currentWeather: state.loadedForecast.list[0],
+                  city: state.loadedForecast.city,
+                  onSharePressed: () {
+                    _onSharePressed(
+                      state.loadedForecast.city,
+                      state.loadedForecast.list[0],
+                    );
+                  },
+                );
+              }
+            } else {
+              return ForecastPage(
                     forecast: state.loadedForecast,
                     forecastList: _forecastSplit(state.loadedForecast.list),
                   );
+            }
           } else if (state is ForecastErrorState) {
             return Center(
               child: ForecastError(
