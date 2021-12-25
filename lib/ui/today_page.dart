@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/ui/widgets/custom_text_button.dart';
+import 'package:weather_application/ui/widgets/dash_divider.dart';
 import 'package:weather_application/ui/widgets/today_page_widgets/city_section.dart';
 import 'package:weather_application/ui/widgets/today_page_widgets/icons_section.dart';
 
@@ -21,22 +22,20 @@ class TodayPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CitySection(
-          city: city,
-          currentWeather: currentWeather,
+        Padding(
+          padding: const EdgeInsets.only(top: 35.0),
+          child: CitySection(
+            city: city,
+            currentWeather: currentWeather,
+          ),
         ),
-        Divider(
-          thickness: 2,
-          indent: MediaQuery.of(context).size.width * 0.3,
-          endIndent: MediaQuery.of(context).size.width * 0.3,
-        ),
+        const DashDivider(),
         IconsSection(currentWeather: currentWeather),
-        Divider(
-          thickness: 2,
-          indent: MediaQuery.of(context).size.width * 0.3,
-          endIndent: MediaQuery.of(context).size.width * 0.3,
+        const DashDivider(),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: CustomTextButton(title: 'Share', onPressed: onSharePressed),
         ),
-        CustomTextButton(title: 'Share', onPressed: onSharePressed),
       ],
     );
   }

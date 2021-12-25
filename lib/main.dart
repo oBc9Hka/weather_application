@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+          fontFamily: 'Avenir',
           dividerTheme: const DividerThemeData(
             space: 0,
           ),

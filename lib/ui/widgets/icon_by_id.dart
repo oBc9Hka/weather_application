@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+import '../../models/forecast.dart';
+
 class IconById extends StatelessWidget {
   const IconById({
     Key? key,
     required this.weatherID,
-    required this.date,
+    required this.sys,
     this.color,
     this.size,
   }) : super(key: key);
 
   final int weatherID;
-  final DateTime date;
+  final Sys sys;
   final Color? color;
   final double? size;
 
@@ -84,7 +86,7 @@ class IconById extends StatelessWidget {
     }
 
     return Icon(
-      _getIconByWeather(weatherID, date.hour < 21 && date.hour >= 6),
+      _getIconByWeather(weatherID, sys.pod == 'd'),
       color: color,
       size: size,
     );
