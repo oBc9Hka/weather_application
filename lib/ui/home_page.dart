@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:dash_painter/dash_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
@@ -7,15 +7,16 @@ import 'package:weather_application/bloc/forecast_state.dart';
 import 'package:weather_application/models/forecast.dart';
 import 'package:weather_application/ui/forecast_page.dart';
 import 'package:weather_application/ui/today_page.dart';
-import 'package:weather_application/ui/widgets/custom_app_bar_bottom.dart';
-import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
-import 'package:weather_application/ui/widgets/forecast_error.dart';
-import 'package:weather_application/ui/widgets/geolocation_loading.dart';
-import 'package:weather_application/ui/widgets/geolocation_loading_error.dart';
 import 'package:weather_application/ui/today_page_wide.dart';
-import 'package:weather_icons/weather_icons.dart';
+import 'package:weather_application/ui/widgets/custom_app_bar_bottom.dart';
+import 'package:weather_application/ui/widgets/custom_flutter_app_icons.dart';
+import 'package:weather_application/ui/widgets/custom_progress_indicator.dart';
+import 'package:weather_application/ui/widgets/forecast_widgets/forecast_error.dart';
+import 'package:weather_application/ui/widgets/geolocation_widgets/geolocation_loading.dart';
+import 'package:weather_application/ui/widgets/geolocation_widgets/geolocation_loading_error.dart';
 
 import '../bloc/forecast_bloc.dart';
+import '../models/tab_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,10 +25,16 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const double bottomNavigationIconSize = 20;
   String _cityName = 'Searching...';
+
+  static const double bottomNavigationIconSize = 24;
+  final List<TabItem> _bottomBarIcons = [
+    TabItem(title: 'Today', icon: Icons.wb_sunny_outlined),
+    TabItem(title: 'Forecast', icon: CustomIcons.cloud_sun)
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -149,17 +156,17 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
             _cityName = state.loadedForecast.city.name;
             if (_selectedIndex == 0) {
               if ((MediaQuery.of(context).size.width >
-                        MediaQuery.of(context).size.height)) {
+                  MediaQuery.of(context).size.height)) {
                 return TodayPageWide(
-                        city: state.loadedForecast.city,
-                        currentWeather: state.loadedForecast.list[0],
-                        onSharePressed: () {
-                          _onSharePressed(
-                            state.loadedForecast.city,
-                            state.loadedForecast.list[0],
-                          );
-                        },
-                      );
+                  city: state.loadedForecast.city,
+                  currentWeather: state.loadedForecast.list[0],
+                  onSharePressed: () {
+                    _onSharePressed(
+                      state.loadedForecast.city,
+                      state.loadedForecast.list[0],
+                    );
+                  },
+                );
               } else {
                 return TodayPage(
                   currentWeather: state.loadedForecast.list[0],
@@ -174,9 +181,9 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
               }
             } else {
               return ForecastPage(
-                    forecast: state.loadedForecast,
-                    forecastList: _forecastSplit(state.loadedForecast.list),
-                  );
+                forecast: state.loadedForecast,
+                forecastList: _forecastSplit(state.loadedForecast.list),
+              );
             }
           } else if (state is ForecastErrorState) {
             return Center(
@@ -199,26 +206,28 @@ Date: ${weather.dtTxt.day}.${weather.dtTxt.month}.${weather.dtTxt.year}''');
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: Icon(
-                WeatherIcons.day_sunny,
-                size: bottomNavigationIconSize,
+        items: [
+          ..._bottomBarIcons.map(
+            (item) => BottomNavigationBarItem(
+              icon: Container(
+                decoration: DashDecoration(
+                  gradient: const SweepGradient(
+                    colors: [
+                      Colors.grey,
+                      Colors.grey,
+                    ],
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Icon(
+                    item.icon,
+                    size: bottomNavigationIconSize,
+                  ),
+                ),
               ),
+              label: item.title,
             ),
-            label: 'Today',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: Icon(
-                WeatherIcons.night_alt_cloudy,
-                size: bottomNavigationIconSize,
-              ),
-            ),
-            label: 'Forecast',
           ),
         ],
         currentIndex: _selectedIndex,

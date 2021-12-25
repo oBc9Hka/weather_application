@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_application/constants.dart';
 import 'package:weather_application/models/forecast.dart';
 import 'package:weather_application/ui/widgets/icon_by_id.dart';
 
@@ -56,7 +57,7 @@ class ForecastDay extends StatelessWidget {
               icon: IconById(
                 weatherID: list[index].weather.first.id,
                 sys: list[index].sys,
-                color: Colors.orangeAccent,
+                color: Constants.iconsColor,
                 size: 45,
               ),
               time: list[index].dtTxt.hour.toString().length < 2
@@ -106,7 +107,7 @@ class ForecastDayToday extends StatelessWidget {
                 icon: IconById(
                   weatherID: list[index].weather.first.id,
                   sys: list[index].sys,
-                  color: Colors.orangeAccent,
+                  color: Constants.iconsColor,
                   size: 50,
                 ),
                 time: list[index].dtTxt.hour.toString().length < 2
