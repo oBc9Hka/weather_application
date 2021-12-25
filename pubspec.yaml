@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc: ^8.0.0
   geolocator: ^8.0.1
   share: ^2.0.4
+  dash_painter:
 
   weather_icons: 3.0.0
   cupertino_icons: ^1.0.2
@@ -49,3 +50,7 @@ flutter:
     - family: Avenir
       fonts:
         - asset: fonts/AvenirLTProBook.otf
+
+    - family: CustomIcons
+      fonts:
+       - asset: fonts/CustomIcons.ttf

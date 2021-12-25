@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'custom_text_button.dart';
+import '../custom_text_button.dart';
 
 class GeolocationError extends StatelessWidget {
   const GeolocationError({
