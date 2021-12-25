@@ -32,9 +32,15 @@ class ForecastTile extends StatelessWidget {
               children: [
                 Text(
                   time,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                    fontFamily: 'Fluro',
+                    fontSize: 18,
+                  ),
                 ),
-                Text(weatherState),
+                Text(
+                  weatherState,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           ),
@@ -45,6 +51,7 @@ class ForecastTile extends StatelessWidget {
               child: Text(
                 '$temperature°',
                 style: const TextStyle(
+                  fontFamily: 'Fluro',
                   color: Colors.blue,
                   fontSize: 50,
                 ),

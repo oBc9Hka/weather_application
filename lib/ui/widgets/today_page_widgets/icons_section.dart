@@ -49,7 +49,7 @@ class IconsSection extends StatelessWidget {
                   : '${currentWeather.rain?.the3H ?? 0.0} mm',
             ),
             IconIndicator(
-              icon: WeatherIcons.celsius,
+              icon: WeatherIcons.barometer,
               title: '${currentWeather.main.pressure} hPa',
             ),
           ],

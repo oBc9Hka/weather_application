@@ -22,16 +22,25 @@ class TodayPageWide extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CitySection(city: city, currentWeather: currentWeather),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CitySection(city: city, currentWeather: currentWeather),
+          ],
+        ),
         VerticalDivider(
           thickness: 2,
           indent: MediaQuery.of(context).size.height * 0.1,
           endIndent: MediaQuery.of(context).size.height * 0.1,
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconsSection(currentWeather: currentWeather),
-            CustomTextButton(title: 'Share', onPressed: onSharePressed,),
+            CustomTextButton(
+              title: 'Share',
+              onPressed: onSharePressed,
+            ),
           ],
         ),
       ],

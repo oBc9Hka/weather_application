@@ -16,17 +16,24 @@ class IconIndicator extends StatelessWidget {
         maxWidth: 80,
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             icon,
             color: Colors.orangeAccent,
-            size: 30,
+            size: MediaQuery.of(context).size.height >
+                    MediaQuery.of(context).size.width
+                ? MediaQuery.of(context).size.height * 0.04
+                : MediaQuery.of(context).size.width * 0.04, //30,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(
+                fontFamily: 'Fluro',
+                fontSize: 16,
+              ),
             ),
           ),
         ],

@@ -40,3 +40,12 @@ flutter:
 
   assets:
     - assets/
+
+  fonts:
+    - family: Fluro
+      fonts:
+        - asset: fonts/FLURO.otf
+        - asset: fonts/FLURO Bold.otf
+    - family: Avenir
+      fonts:
+        - asset: fonts/AvenirLTProBook.otf

@@ -20,26 +20,20 @@ class TodayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 35.0),
-            child: CitySection(
-              city: city,
-              currentWeather: currentWeather,
-            ),
+        Padding(
+          padding: const EdgeInsets.only(top: 35.0),
+          child: CitySection(
+            city: city,
+            currentWeather: currentWeather,
           ),
         ),
         const DashDivider(),
-        Expanded(
-          flex: 4,
-          child: IconsSection(currentWeather: currentWeather),
-        ),
+        IconsSection(currentWeather: currentWeather),
         const DashDivider(),
-        Expanded(
-          flex: 3,
+        Padding(
+          padding: const EdgeInsets.all(20.0),
           child: CustomTextButton(title: 'Share', onPressed: onSharePressed),
         ),
       ],
